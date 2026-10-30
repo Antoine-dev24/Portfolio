@@ -1,80 +1,147 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../store/store_cubit.dart';
-import '../theme/app_theme.dart';
+import '../data/experiences.dart';
+import '../widgets/career_menu.dart';
+import '../widgets/career_step.dart';
+import '../widgets/frameworks_section.dart';
+import '../widgets/home_header.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final frameworks = context.select(
-      (StoreCubit cubit) => cubit.state.frameworks,
-    );
-    final isCompact = MediaQuery.sizeOf(context).width < 600;
+  State<HomePage> createState() => _HomePageState();
+}
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(24, 48, 24, 64),
+class _HomePageState extends State<HomePage> {
+  // Décalage entre le bas de la topbar et l'expérience ciblée après un clic.
+  static const _scrollGap = 24.0;
+  // Une expérience devient active un peu avant d'atteindre sa position cible.
+  static const _activationMargin = 40.0;
+  static const _menuMinWidth = 960.0;
+
+  final _scrollController = ScrollController();
+  final _stepKeys = List.generate(experiences.length, (_) => GlobalKey());
+
+  int _activeStep = 0;
+  bool _isScrollingToStep = false;
+  int _scrollRequest = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_updateActiveStep);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  double? _stepTop(int index) {
+    final box =
+        _stepKeys[index].currentContext?.findRenderObject() as RenderBox?;
+    return box?.localToGlobal(Offset.zero).dy;
+  }
+
+  void _updateActiveStep() {
+    // Pendant un scroll lancé par un clic, le menu garde l'expérience choisie.
+    if (_isScrollingToStep) return;
+
+    final activationLine =
+        MediaQuery.paddingOf(context).top + _scrollGap + _activationMargin;
+    var active = 0;
+    for (var index = 0; index < _stepKeys.length; index++) {
+      final top = _stepTop(index);
+      if (top != null && top <= activationLine) active = index;
+    }
+    if (active != _activeStep) setState(() => _activeStep = active);
+  }
+
+  Future<void> _scrollToStep(int index) async {
+    final top = _stepTop(index);
+    if (top == null) return;
+
+    final request = ++_scrollRequest;
+    setState(() {
+      _activeStep = index;
+      _isScrollingToStep = true;
+    });
+
+    final position = _scrollController.position;
+    final target =
+        (position.pixels +
+                top -
+                MediaQuery.paddingOf(context).top -
+                _scrollGap)
+            .clamp(position.minScrollExtent, position.maxScrollExtent);
+
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _scrollController.jumpTo(target);
+    } else {
+      await _scrollController.animateTo(
+        target,
+        duration: const Duration(milliseconds: 550),
+        curve: Curves.easeInOutCubic,
+      );
+    }
+
+    if (!mounted || request != _scrollRequest) return;
+    _isScrollingToStep = false;
+    _updateActiveStep();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final showMenu = size.width >= _menuMinWidth;
+
+    final content = SingleChildScrollView(
+      controller: _scrollController,
+      // Le padding haut de MediaQuery inclut la hauteur de la topbar.
+      padding: EdgeInsets.fromLTRB(
+        24,
+        MediaQuery.paddingOf(context).top + 48,
+        24,
+        // Laisse assez de hauteur pour amener la dernière expérience en haut.
+        showMenu ? size.height * 0.65 : 64,
+      ),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 760),
+          constraints: const BoxConstraints(maxWidth: 680),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ShaderMask(
-                shaderCallback: const LinearGradient(
-                  colors: [
-                    AppColors.moonlight,
-                    AppColors.orchid,
-                    AppColors.lagoon,
-                  ],
-                ).createShader,
-                child: Text(
-                  'Antoine Moreno',
-                  textAlign: TextAlign.center,
-                  style: textTheme.displayLarge?.copyWith(
-                    color: Colors.white,
-                    fontSize: isCompact ? 48 : null,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Bienvenue sur mon portfolio.',
-                textAlign: TextAlign.center,
-                style: textTheme.bodyLarge,
-              ),
-              const SizedBox(height: 72),
-              Text('Frameworks', style: textTheme.titleLarge),
-              const SizedBox(height: 20),
-              Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 12,
-                runSpacing: 12,
-                children: [
-                  for (final framework in frameworks)
-                    Chip(
-                      key: ValueKey(framework.id),
-                      label: Text(framework.name),
-                      backgroundColor: AppColors.midnight.withValues(
-                        alpha: 0.45,
-                      ),
-                      side: BorderSide(
-                        color: AppColors.lagoon.withValues(alpha: 0.4),
-                      ),
-                      shape: const StadiumBorder(),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                    ),
-                ],
-              ),
+              const HomeHeader(),
+              const SizedBox(height: 64),
+              Text('Parcours', style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(height: 24),
+              for (final (index, experience) in experiences.indexed)
+                CareerStep(key: _stepKeys[index], experience: experience),
+              const SizedBox(height: 40),
+              const FrameworksSection(),
             ],
           ),
         ),
       ),
+    );
+
+    if (!showMenu) return content;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(
+          width: 240,
+          child: CareerMenu(
+            experiences: experiences,
+            activeIndex: _activeStep,
+            onSelected: _scrollToStep,
+          ),
+        ),
+        Expanded(child: content),
+      ],
     );
   }
 }

@@ -9,11 +9,11 @@ class StoreCubit extends Cubit<StoreState> {
     : super(
         const StoreState(
           frameworks: [
-            Framework(id: 1, name: 'Flutter'),
-            Framework(id: 2, name: 'React'),
-            Framework(id: 3, name: 'Vue.js'),
-            Framework(id: 4, name: 'Angular'),
-            Framework(id: 5, name: 'Laravel'),
+            Framework(id: 1, name: 'Angular'),
+            Framework(id: 2, name: 'Spring Boot'),
+            Framework(id: 3, name: 'AngularJS'),
+            Framework(id: 4, name: 'NestJS'),
+            Framework(id: 5, name: 'Flutter'),
           ],
         ),
       );

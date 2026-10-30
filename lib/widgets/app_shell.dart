@@ -12,18 +12,14 @@ class AppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Le contenu défile sous la topbar pour que le flou soit visible.
+      extendBodyBehindAppBar: true,
+      appBar: TopBar(currentPath: currentPath),
       body: Stack(
         fit: StackFit.expand,
         children: [
           const NightSkyBackground(),
-          SafeArea(
-            child: Column(
-              children: [
-                TopBar(currentPath: currentPath),
-                Expanded(child: child),
-              ],
-            ),
-          ),
+          SafeArea(top: false, child: child),
         ],
       ),
     );

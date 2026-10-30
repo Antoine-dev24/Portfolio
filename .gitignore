@@ -1,3 +1,23 @@
+# Dart / Flutter generated files
+.dart_tool/
+.pub/
+.pub-cache/
+.flutter-plugins
+.flutter-plugins-dependencies
+migrate_working_dir/
+coverage/
+
+# Symbolication and obfuscation files
+app.*.symbols
+app.*.map.json
+
+# Editors and OS files
+.vscode/
+*.ipr
+*.iws
+.DS_Store
+Thumbs.db
+
 # Gradle files
 .gradle/
 build/

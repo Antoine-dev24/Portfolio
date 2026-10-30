@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../data/experiences.dart';
-import '../widgets/career_menu.dart';
-import '../widgets/career_step.dart';
-import '../widgets/frameworks_section.dart';
-import '../widgets/home_header.dart';
+import '../../career/infrastructure/experiences.dart';
+import '../../career/presentation/career_menu.dart';
+import '../../career/presentation/career_step.dart';
+import '../../frameworks/presentation/frameworks_section.dart';
+import 'home_header.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/framework.dart';
+import '../domain/framework.dart';
 import 'store_state.dart';
 
 // Fake store : données en dur, à remplacer plus tard par une vraie source.

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../models/experience.dart';
-import '../theme/app_theme.dart';
+import '../domain/experience.dart';
+import '../../../core/theme/app_theme.dart';
 
 class CareerStep extends StatelessWidget {
   const CareerStep({super.key, required this.experience});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
+import '../../../core/theme/app_theme.dart';
 
 const _presentation =
     "Développeur fullstack depuis près de 5 ans, je crée et fais évoluer des "

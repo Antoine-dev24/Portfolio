@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../store/store_cubit.dart';
-import '../theme/app_theme.dart';
+import 'store_cubit.dart';
+import '../../../core/theme/app_theme.dart';
 
 class FrameworksSection extends StatelessWidget {
   const FrameworksSection({super.key});

@@ -1,4 +1,4 @@
-import '../models/experience.dart';
+import '../domain/experience.dart';
 
 const experiences = [
   Experience(

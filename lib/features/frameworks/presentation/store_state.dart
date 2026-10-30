@@ -1,4 +1,4 @@
-import '../models/framework.dart';
+import '../domain/framework.dart';
 
 class StoreState {
   const StoreState({required this.frameworks});

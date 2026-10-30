@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 
-import '../pages/home_page.dart';
-import '../widgets/app_shell.dart';
+import '../../features/home/presentation/home_page.dart';
+import '../shell/app_shell.dart';
 
 abstract final class AppRoutes {
   static const home = '/';

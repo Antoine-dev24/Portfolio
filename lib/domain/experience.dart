@@ -9,5 +9,5 @@ class Experience {
   final String label;
   final String period;
   final String title;
-  final String details;
+  final List<String> details;
 }

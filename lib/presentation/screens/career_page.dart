@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-import '../../career/infrastructure/experiences.dart';
-import '../../career/presentation/career_menu.dart';
-import '../../career/presentation/career_step.dart';
-import '../../frameworks/presentation/frameworks_section.dart';
-import 'home_header.dart';
+import '../repositories/experiences.dart';
+import '../widgets/career/career_menu.dart';
+import '../widgets/career/career_step.dart';
+import '../widgets/framework/frameworks_section.dart';
+import '../widgets/career/career_header.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class CareerPage extends StatefulWidget {
+  const CareerPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<CareerPage> createState() => _CareerPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CareerPageState extends State<CareerPage> {
   // Décalage entre le bas de la topbar et l'expérience ciblée après un clic.
   static const _scrollGap = 24.0;
   // Une expérience devient active un peu avant d'atteindre sa position cible.
@@ -71,10 +71,7 @@ class _HomePageState extends State<HomePage> {
 
     final position = _scrollController.position;
     final target =
-        (position.pixels +
-                top -
-                MediaQuery.paddingOf(context).top -
-                _scrollGap)
+        (position.pixels + top - MediaQuery.paddingOf(context).top - _scrollGap)
             .clamp(position.minScrollExtent, position.maxScrollExtent);
 
     if (MediaQuery.disableAnimationsOf(context)) {
@@ -113,7 +110,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const HomeHeader(),
+              const CareerHeader(),
               const SizedBox(height: 64),
               Text('Parcours', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 24),

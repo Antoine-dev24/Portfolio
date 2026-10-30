@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
+import '../../app_theme.dart';
 
 class NightSkyBackground extends StatelessWidget {
   const NightSkyBackground({super.key});

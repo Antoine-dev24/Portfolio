@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:portfolio/app_router.dart';
 import 'package:portfolio/main.dart';
 
 void main() {
-  testWidgets('La route / affiche la topbar et les frameworks du store', (
+  testWidgets('La route / affiche la topbar et la page d\'accueil', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(const PortfolioApp());
+    appRouter.go(AppRoutes.home);
     await tester.pumpAndSettle();
 
-    for (final menu in ['Accueil', 'Projets', 'Contact']) {
+    for (final menu in ['Accueil', 'Parcours', 'Projets', 'Contact']) {
       expect(find.text(menu), findsOneWidget);
     }
+    expect(find.text('Bienvenue'), findsOneWidget);
+    expect(find.text('Antoine Moreno'), findsNothing);
+  });
+
+  testWidgets('Le menu Parcours affiche le parcours et les frameworks', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const PortfolioApp());
+    appRouter.go(AppRoutes.home);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Parcours'));
+    await tester.pumpAndSettle();
+
     expect(find.text('Antoine Moreno'), findsOneWidget);
-    expect(find.text('Parcours'), findsOneWidget);
     expect(find.text('Spring Boot'), findsOneWidget);
     expect(find.text('Flutter'), findsOneWidget);
   });
@@ -27,6 +42,7 @@ void main() {
     addTearDown(tester.view.reset);
 
     await tester.pumpWidget(const PortfolioApp());
+    appRouter.go(AppRoutes.career);
     await tester.pumpAndSettle();
 
     bool isSelected(String label) => tester

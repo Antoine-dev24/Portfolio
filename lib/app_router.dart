@@ -1,10 +1,12 @@
 import 'package:go_router/go_router.dart';
 
-import '../../features/home/presentation/home_page.dart';
-import '../shell/app_shell.dart';
+import 'presentation/screens/app_shell.dart';
+import 'presentation/screens/career_page.dart';
+import 'presentation/screens/home_page.dart';
 
 abstract final class AppRoutes {
   static const home = '/';
+  static const career = '/parcours';
 }
 
 final appRouter = GoRouter(
@@ -19,6 +21,11 @@ final appRouter = GoRouter(
           path: AppRoutes.home,
           pageBuilder: (context, state) =>
               const NoTransitionPage(child: HomePage()),
+        ),
+        GoRoute(
+          path: AppRoutes.career,
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: CareerPage()),
         ),
       ],
     ),

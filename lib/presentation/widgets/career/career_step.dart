@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../domain/experience.dart';
-import '../../../core/theme/app_theme.dart';
+import '../../../domain/experience.dart';
+import '../../../app_theme.dart';
 
 class CareerStep extends StatelessWidget {
   const CareerStep({super.key, required this.experience});
@@ -38,13 +38,14 @@ class CareerStep extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 6),
-            Text(
-              experience.details,
-              style: textTheme.bodyMedium?.copyWith(
-                color: AppColors.haze,
-                height: 1.5,
+            for (final detail in experience.details)
+              Text(
+                '• $detail',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: AppColors.haze,
+                  height: 1.5,
+                ),
               ),
-            ),
           ],
         ),
       ),

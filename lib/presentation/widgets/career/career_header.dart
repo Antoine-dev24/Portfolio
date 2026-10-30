@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_theme.dart';
+import '../../../app_theme.dart';
 
 const _presentation =
     "Développeur fullstack depuis près de 5 ans, je crée et fais évoluer des "
@@ -10,8 +10,8 @@ const _presentation =
     "Concepteur Développeur d'Applications. Autonome et curieux, j'explore "
     "aujourd'hui Flutter sur mes projets personnels.";
 
-class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key});
+class CareerHeader extends StatelessWidget {
+  const CareerHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,7 @@ class HomeHeader extends StatelessWidget {
         Center(
           child: ShaderMask(
             shaderCallback: const LinearGradient(
-              colors: [
-                AppColors.moonlight,
-                AppColors.orchid,
-                AppColors.lagoon,
-              ],
+              colors: [AppColors.moonlight, AppColors.orchid, AppColors.lagoon],
             ).createShader,
             child: Text(
               'Antoine Moreno',

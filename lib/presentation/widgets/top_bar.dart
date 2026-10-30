@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../router/app_router.dart';
-import '../theme/app_theme.dart';
+import '../../app_router.dart';
+import '../../app_theme.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
   const TopBar({super.key, required this.currentPath});
@@ -19,6 +19,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
   // Un menu sans path reste inactif tant que sa page n'existe pas.
   static const _menus = [
     (label: 'Accueil', path: AppRoutes.home),
+    (label: 'Parcours', path: AppRoutes.career),
     (label: 'Projets', path: null),
     (label: 'Contact', path: null),
   ];

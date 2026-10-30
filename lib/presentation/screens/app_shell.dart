@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'night_sky_background.dart';
-import 'top_bar.dart';
+import '../widgets/night_sky_background.dart';
+import '../widgets/top_bar.dart';
 
 class AppShell extends StatelessWidget {
   const AppShell({super.key, required this.currentPath, required this.child});

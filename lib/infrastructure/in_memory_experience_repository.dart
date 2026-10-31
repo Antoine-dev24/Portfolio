@@ -1,5 +1,5 @@
-import '../../domain/experience.dart';
-import '../../domain/experience_repository.dart';
+import '../domain/experience.dart';
+import '../domain/experience_repository.dart';
 import 'experiences.dart';
 
 class InMemoryExperienceRepository implements ExperienceRepository {

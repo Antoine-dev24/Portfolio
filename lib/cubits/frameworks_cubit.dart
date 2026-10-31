@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../domain/framework.dart';
-import 'store_state.dart';
+import 'frameworks_state.dart';
 
-// Fake store : données en dur, à remplacer plus tard par une vraie source.
-class StoreCubit extends Cubit<StoreState> {
-  StoreCubit()
+// Données factices : en dur, à remplacer plus tard par une vraie source.
+class FrameworksCubit extends Cubit<FrameworksState> {
+  FrameworksCubit()
     : super(
-        const StoreState(
+        const FrameworksState(
           frameworks: [
             Framework(id: 1, name: 'Angular'),
             Framework(id: 2, name: 'Spring Boot'),

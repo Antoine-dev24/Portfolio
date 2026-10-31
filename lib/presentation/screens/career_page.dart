@@ -1,19 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../repositories/experiences.dart';
+import '../../cubits/career_cubit.dart';
+import '../../cubits/career_state.dart';
+import '../../domain/experience.dart';
 import '../widgets/career/career_menu.dart';
 import '../widgets/career/career_step.dart';
 import '../widgets/framework/frameworks_section.dart';
 import '../widgets/career/career_header.dart';
 
-class CareerPage extends StatefulWidget {
+class CareerPage extends StatelessWidget {
   const CareerPage({super.key});
 
   @override
-  State<CareerPage> createState() => _CareerPageState();
+  Widget build(BuildContext context) {
+    return BlocBuilder<CareerCubit, CareerState>(
+      builder: (context, state) => switch (state) {
+        CareerLoading() => const Center(child: CircularProgressIndicator()),
+        CareerLoaded(:final experiences) => _CareerContent(
+          experiences: experiences,
+        ),
+        CareerError() => const Center(
+          child: Text('Impossible de charger le parcours.'),
+        ),
+      },
+    );
+  }
 }
 
-class _CareerPageState extends State<CareerPage> {
+class _CareerContent extends StatefulWidget {
+  const _CareerContent({required this.experiences});
+
+  final List<Experience> experiences;
+
+  @override
+  State<_CareerContent> createState() => _CareerContentState();
+}
+
+class _CareerContentState extends State<_CareerContent> {
   // Décalage entre le bas de la topbar et l'expérience ciblée après un clic.
   static const _scrollGap = 24.0;
   // Une expérience devient active un peu avant d'atteindre sa position cible.
@@ -21,7 +45,10 @@ class _CareerPageState extends State<CareerPage> {
   static const _menuMinWidth = 960.0;
 
   final _scrollController = ScrollController();
-  final _stepKeys = List.generate(experiences.length, (_) => GlobalKey());
+  late final _stepKeys = List.generate(
+    widget.experiences.length,
+    (_) => GlobalKey(),
+  );
 
   int _activeStep = 0;
   bool _isScrollingToStep = false;
@@ -114,7 +141,7 @@ class _CareerPageState extends State<CareerPage> {
               const SizedBox(height: 64),
               Text('Parcours', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 24),
-              for (final (index, experience) in experiences.indexed)
+              for (final (index, experience) in widget.experiences.indexed)
                 CareerStep(key: _stepKeys[index], experience: experience),
               const SizedBox(height: 40),
               const FrameworksSection(),
@@ -132,7 +159,7 @@ class _CareerPageState extends State<CareerPage> {
         SizedBox(
           width: 240,
           child: CareerMenu(
-            experiences: experiences,
+            experiences: widget.experiences,
             activeIndex: _activeStep,
             onSelected: _scrollToStep,
           ),

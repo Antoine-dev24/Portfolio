@@ -11,12 +11,16 @@ Les dépendances vont toujours vers le domaine.
 
 ```
 lib/
-  core/                 # transverse : thème, routeur, injection des dépendances
-  features/<feature>/
-    domain/             # entités, value objects, ports (interfaces)
-    application/        # cas d'usage
-    infrastructure/     # adapters sortants : API, stockage, données locales
-    presentation/       # adapter entrant : pages, widgets, cubits
+  main.dart             # point d'entrée, injection des dépendances
+  app_router.dart
+  app_theme.dart
+  domain/               # entités, value objects, ports (interfaces)
+  application/          # cas d'usage, à créer au premier besoin
+  infrastructure/       # adapters sortants : API, stockage, données locales
+  cubits/               # cubits et états de l'interface
+  presentation/         # adapter entrant
+    screens/            # pages et cadre de l'application
+    widgets/<feature>/
 ```
 
 | Couche | Peut importer | Ne doit jamais contenir |
@@ -24,10 +28,11 @@ lib/
 | `domain` | Dart pur uniquement | Flutter, HTTP, JSON, `flutter_bloc` |
 | `application` | `domain` | widgets, implémentations concrètes |
 | `infrastructure` | `domain` | widgets, logique métier |
-| `presentation` | `application`, `domain` | accès direct aux données, règles métier |
+| `cubits` | `application`, `domain` | widgets, implémentations concrètes |
+| `presentation` | `cubits`, `application`, `domain` | accès direct aux données, règles métier |
 
-- **Ports** : le domaine définit l'interface (`ExperienceRepository`) et l'infrastructure l'implémente (`LocalExperienceRepository`).
-- **Injection** : seul `core/` relie les ports à leurs adapters. Les autres couches reçoivent leurs dépendances par le constructeur.
+- **Ports** : le domaine définit l'interface (`ExperienceRepository`) et l'infrastructure l'implémente (`InMemoryExperienceRepository`).
+- **Injection** : seul `main.dart` relie les ports à leurs adapters. Les autres couches reçoivent leurs dépendances par le constructeur.
 - **Cas d'usage** : une classe par action métier. N'en crée pas pour un simple relais vers un repository, le cubit peut alors appeler le port directement.
 - **Modèles** : les DTO et le JSON restent dans `infrastructure`, avec une conversion vers les entités du domaine.
 - **Pragmatisme** : ne crée que les couches utiles à la feature. Une page statique n'a pas besoin de domaine.

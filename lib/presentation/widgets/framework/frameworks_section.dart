@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../cubits/store_cubit.dart';
+import '../../../cubits/frameworks_cubit.dart';
 import '../../../app_theme.dart';
 
 class FrameworksSection extends StatelessWidget {
@@ -10,7 +10,7 @@ class FrameworksSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final frameworks = context.select(
-      (StoreCubit cubit) => cubit.state.frameworks,
+      (FrameworksCubit cubit) => cubit.state.frameworks,
     );
 
     return Column(

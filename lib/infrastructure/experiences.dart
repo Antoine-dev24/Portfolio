@@ -1,4 +1,4 @@
-import '../../domain/experience.dart';
+import '../domain/experience.dart';
 
 const experiences = [
   Experience(
@@ -10,6 +10,8 @@ const experiences = [
       'Montées de version de Spring Boot 2 à 4',
       'Administration MariaDB',
       'Suivi de production sur datacenter auto-hébergé',
+      'Veille sécuritaire pour résoudre des failles de sécurité',
+      'Automatisation des tests fonctionnels via script python/bash'
     ],
   ),
   Experience(

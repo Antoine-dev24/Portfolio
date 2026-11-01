@@ -34,6 +34,13 @@ class CareerMenu extends StatelessWidget {
               isActive: index == activeIndex,
               onTap: () => onSelected(index),
             ),
+          // La stack prend l'index qui suit la dernière expérience.
+          _CareerMenuItem(
+            label: 'Stack technique',
+            period: 'Technologies et outils',
+            isActive: activeIndex == experiences.length,
+            onTap: () => onSelected(experiences.length),
+          ),
         ],
       ),
     );

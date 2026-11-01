@@ -46,6 +46,7 @@ lib/
 - Limite les reconstructions avec `BlocSelector` ou `buildWhen`. Libère les controllers dans `dispose()`.
 - Après un `await`, vérifie `context.mounted` avant d'utiliser le `context`.
 - Gère explicitement les états de chargement, d'erreur et de liste vide.
+- Pour choisir selon un état ou un type, préfère une `sealed class` et une expression `switch` avec pattern matching, avec déstructuration si utile (`CareerLoaded(:final experiences) => ...`) : le compilateur signale tout cas oublié. Évite les chaînes de `if`/`is` et le `default` qui annulerait cette vérification. Garde un simple `if` pour une condition booléenne.
 - Pour les listes longues, utilise `ListView.builder` ou les slivers.
 - Respecte l'accessibilité : `Semantics`, contrastes, mise à l'échelle du texte.
 

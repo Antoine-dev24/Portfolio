@@ -2,8 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'cubits/career_cubit.dart';
-import 'cubits/frameworks_cubit.dart';
+import 'cubits/skills_cubit.dart';
 import 'domain/experience_repository.dart';
+import 'domain/skill_repository.dart';
 import 'presentation/screens/app_shell.dart';
 import 'presentation/screens/career_page.dart';
 import 'presentation/screens/home_page.dart';
@@ -35,7 +36,10 @@ final appRouter = GoRouter(
                   create: (context) =>
                       CareerCubit(context.read<ExperienceRepository>())..load(),
                 ),
-                BlocProvider(create: (_) => FrameworksCubit()),
+                BlocProvider(
+                  create: (context) =>
+                      SkillsCubit(context.read<SkillRepository>())..load(),
+                ),
               ],
               child: const CareerPage(),
             ),

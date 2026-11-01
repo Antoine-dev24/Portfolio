@@ -11,8 +11,9 @@ const experiences = [
       'Administration MariaDB',
       'Suivi de production sur datacenter auto-hébergé',
       'Veille sécuritaire pour résoudre des failles de sécurité',
-      'Automatisation des tests fonctionnels via script python/bash'
+      'Automatisation des tests fonctionnels via script python/bash',
     ],
+    skillIds: ['spring-boot', 'mariadb', 'python', 'bash', 'java', 'junit'],
   ),
   Experience(
     label: 'E-Cervo',
@@ -23,6 +24,18 @@ const experiences = [
           'et PostgreSQL',
       'Conteneurisation Docker',
       'Déploiement sur GCP avec Kubernetes',
+    ],
+    skillIds: [
+      'spring-boot',
+      'java',
+      'kotlin',
+      'angular',
+      'postgresql',
+      'docker',
+      'kubernetes',
+      'gcp',
+      'material'
+      'nestjs'
     ],
   ),
   Experience(

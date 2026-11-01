@@ -4,10 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../cubits/career_cubit.dart';
 import '../../cubits/career_state.dart';
 import '../../domain/experience.dart';
+import '../widgets/career/career_body.dart';
 import '../widgets/career/career_menu.dart';
-import '../widgets/career/career_step.dart';
-import '../widgets/framework/frameworks_section.dart';
-import '../widgets/career/career_header.dart';
 
 class CareerPage extends StatelessWidget {
   const CareerPage({super.key});
@@ -45,8 +43,9 @@ class _CareerContentState extends State<_CareerContent> {
   static const _menuMinWidth = 960.0;
 
   final _scrollController = ScrollController();
+  // Une clé par expérience, plus une dernière pour la section Stack technique.
   late final _stepKeys = List.generate(
-    widget.experiences.length,
+    widget.experiences.length + 1,
     (_) => GlobalKey(),
   );
 
@@ -134,18 +133,12 @@ class _CareerContentState extends State<_CareerContent> {
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 680),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const CareerHeader(),
-              const SizedBox(height: 64),
-              Text('Parcours', style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(height: 24),
-              for (final (index, experience) in widget.experiences.indexed)
-                CareerStep(key: _stepKeys[index], experience: experience),
-              const SizedBox(height: 40),
-              const FrameworksSection(),
-            ],
+          child: CareerBody(
+            experiences: widget.experiences,
+            stepKeys: _stepKeys,
+            stackKey: _stepKeys.last,
+            showStackShortcut: !showMenu,
+            onScrollTo: _scrollToStep,
           ),
         ),
       ),

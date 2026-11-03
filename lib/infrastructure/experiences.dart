@@ -2,6 +2,20 @@ import '../domain/experience.dart';
 
 const experiences = [
   Experience(
+    label: 'Projets personnels',
+    period: 'Depuis octobre 2026',
+    title: 'Découverte du framework Flutter',
+    details: [
+      'Conception et développement de ce portfolio en Flutter Web et Dart',
+      'Architecture hexagonale : séparation domaine, application et '
+          'infrastructure',
+      'Interfaces responsives avec Material 3 et composition de widgets',
+      'Gestion d\'état avec Cubit (state/store) et états immuables',
+      'Pattern matching Dart 3 : sealed classes, switch expressions',
+    ],
+    skillIds: ['flutter', 'dart', 'android-studio'],
+  ),
+  Experience(
     label: 'SII',
     period: 'Depuis septembre 2025',
     title: 'Développeur fullstack, SII Nouvelle-Aquitaine',
@@ -20,8 +34,10 @@ const experiences = [
     period: '2022 à 2025',
     title: 'Développeur fullstack, E-Cervo, Montpellier',
     details: [
-      'Développement de deux applications métier avec Spring, Kotlin, Angular '
-          'et PostgreSQL',
+      'Projet 1 : Développement d\'une application de reprographie avec gestion de factures et d\'un module de templating de documents',
+      'Spring boot / Java, Docker, Kubernetes, NestJS, Angular, AngularJS',
+      'Projet 2 : Logiciel de workflow métier interfacé sur une GED DocuShare',
+      'Spring boot (kotlin), Angular, Docker'
       'Conteneurisation Docker',
       'Déploiement sur GCP avec Kubernetes',
     ],
@@ -30,12 +46,19 @@ const experiences = [
       'java',
       'kotlin',
       'angular',
+      'angularjs',
       'postgresql',
       'docker',
       'kubernetes',
       'gcp',
-      'material'
-      'nestjs'
+      'material',
+      'nestjs',
+      'jest',
+      'jasmine',
+      'spock',
+      'junit',
+      'typescript',
+      'javascript',
     ],
   ),
   Experience(

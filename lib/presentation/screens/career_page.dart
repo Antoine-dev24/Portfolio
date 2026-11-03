@@ -49,7 +49,8 @@ class _CareerContentState extends State<_CareerContent> {
     (_) => GlobalKey(),
   );
 
-  int _activeStep = 0;
+  // Isolé dans un notifier : changer d'expérience active ne reconstruit que le menu.
+  final _activeStep = ValueNotifier(0);
   bool _isScrollingToStep = false;
   int _scrollRequest = 0;
 
@@ -62,6 +63,7 @@ class _CareerContentState extends State<_CareerContent> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _activeStep.dispose();
     super.dispose();
   }
 
@@ -82,7 +84,7 @@ class _CareerContentState extends State<_CareerContent> {
       final top = _stepTop(index);
       if (top != null && top <= activationLine) active = index;
     }
-    if (active != _activeStep) setState(() => _activeStep = active);
+    _activeStep.value = active;
   }
 
   Future<void> _scrollToStep(int index) async {
@@ -90,10 +92,8 @@ class _CareerContentState extends State<_CareerContent> {
     if (top == null) return;
 
     final request = ++_scrollRequest;
-    setState(() {
-      _activeStep = index;
-      _isScrollingToStep = true;
-    });
+    _activeStep.value = index;
+    _isScrollingToStep = true;
 
     final position = _scrollController.position;
     final target =
@@ -151,10 +151,13 @@ class _CareerContentState extends State<_CareerContent> {
       children: [
         SizedBox(
           width: 240,
-          child: CareerMenu(
-            experiences: widget.experiences,
-            activeIndex: _activeStep,
-            onSelected: _scrollToStep,
+          child: ValueListenableBuilder(
+            valueListenable: _activeStep,
+            builder: (context, activeStep, _) => CareerMenu(
+              experiences: widget.experiences,
+              activeIndex: activeStep,
+              onSelected: _scrollToStep,
+            ),
           ),
         ),
         Expanded(child: content),

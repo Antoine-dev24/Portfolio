@@ -19,19 +19,6 @@ class CareerTimeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Équivalent avec un BlocBuilder et buildWhen :
-    //
-    // String? skillIdOf(SkillsState state) =>
-    //     state is SkillsLoaded ? state.selectedSkill?.id : null;
-    //
-    // return BlocBuilder<SkillsCubit, SkillsState>(
-    //   buildWhen: (previous, current) =>
-    //       skillIdOf(previous) != skillIdOf(current),
-    //   builder: (context, state) {
-    //     final skillId = skillIdOf(state);
-    //     ...
-    //   },
-    // );
     return BlocSelector<SkillsCubit, SkillsState, String?>(
       selector: (state) =>
           state is SkillsLoaded ? state.selectedSkill?.id : null,
